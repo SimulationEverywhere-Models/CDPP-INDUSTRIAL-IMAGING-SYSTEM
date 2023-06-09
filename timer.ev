@@ -1,0 +1,14 @@
+00:00:05:000 trigIn 1
+00:00:10:000 commandIn 4
+00:00:11:000 commandIn 801
+00:00:12:000 commandIn 4
+00:00:15:000 commandIn 802
+00:00:20:000 commandIn 4
+00:00:21:000 trigIn 1
+00:00:23:000 trigIn 1
+00:00:25:000 commandIn 6
+00:00:25:350 commandIn 5
+00:00:26:000 commandIn 2
+00:00:27:000 commandIn 803
+00:00:28:000 commandIn 6
+00:00:28:400 commandIn 5

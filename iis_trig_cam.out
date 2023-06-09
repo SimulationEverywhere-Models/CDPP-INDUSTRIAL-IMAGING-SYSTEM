@@ -1,0 +1,9 @@
+00:00:01:175 imagebufout 4801
+00:00:01:204 imagebufout -4801
+00:00:02:125 imagebufout 4802
+00:00:02:154 imagebufout -4802
+00:00:02:425 imagebufout 4801
+00:00:02:454 imagebufout -4801
+00:00:03:000 respout 1
+00:00:06:000 imagebufout 4801
+00:00:06:029 imagebufout -4801

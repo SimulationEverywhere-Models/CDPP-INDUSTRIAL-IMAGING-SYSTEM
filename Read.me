@@ -1,0 +1,130 @@
+Industrial Imaging System (IIS) Simulator
+
+Understanding DEVS Event Data
+---------------------------------------------------------------
+fg_codes.h          Contains all the defines for the event commands
+                    and other global constants.
+
+The data passed by DEVS events in the IIS sim combines both
+commands and the data those commands work on.  The differnt types
+of information are combined using bit shifts and bit masks.
+
+The bit mask is 0xF, and the bit shift is 4 bits.  To construct a
+command take the lowest level data, shift it left four bits, add
+the next level of data and shift left again until all the data
+has been added.
+
+Images are slightly different, they only consist of a size in KB
+(lowest level data) and an index (highest level).  Negative
+image data indicates the end of a frame (image).
+ 4801  is the start of image index 1, with size 300KB
+-4801  is the end of image index 1, with size 300KB
+
+Three examples of event data construction:
+
+Image with index 3 and size of 400 KB.
+
+    lowest level   image size   400
+    highest level  image index  3
+
+    400 shifted left 4 bits is 6400 (400x16)
+    6400 + 3 is 6403
+    
+    The event data for this image is 6403
+
+Store an image with index 5 and size of 200KB in an onboard
+buffer (command codes are found in fg_codes.h).
+
+    lowest level    image size  200
+                    image index 5
+    highest level   store image 3
+    
+
+    200 shifted left 4 bits is 3200
+    3200 + 5 is 3205
+    3205 shifted left 4 bits is 51280
+    51280 + 3 is 51283
+    
+    The event command to store this image is 51283
+    (this is an internal Frame Grabber message meant
+     to be sent directly to an instance of FGStorageBuffer)
+
+Set the active time on the timer to 50 milliseconds.
+
+    lowest level    time                50
+                    set active          1
+    highest level   send inst to timer  4
+    
+    50 shifted left 4 bits is 800
+    800 + 1 is 801
+    801 shifted left 4 bits is 12816
+    12816 + 4 is 12820
+    
+    The command to set the Frame Grabber's timer's
+    active time to 50 msec is 12820.
+    (this is an external command meant to be sent to
+    the frame grabber.)
+
+.cfg files      Camera config files
+----------------------------------------------------------------
+toofast.cfg         Continuous mode camera with high pixel clock
+slow.cfg
+slowtrig.cfg
+
+----------------------------------------------------------------
+cfg file format
+----------------------------------------------------------------
+sizeX
+sizeY
+bit depth
+colour bands
+CameraLink bit width (must be 32 or 64)
+pixel clock
+frames per second
+continuous mode (1 = continuous)
+
+No whitespaces or comments allow.
+
+----------------------------------------------------------------
+images.txt  List of what the image indices mean.
+
+Format
+------------
+3
+first.bmp
+second.bmp
+third.bmp
+------------
+No whitespace or comments are allowed.  The first line is the number
+of entries, and the rest are entry data.  Does not have to be file
+names.
+----------------------------------------------------------------
+
+.bat files
+----------------------------------------------------------------
+buffer.bat          Runs test for the atomic model FGStorageBuffer.
+                    Uses buffer.ev
+camera.bat          Run the triggered mode camera test
+                    Uses camera.ev
+cont_camera.bat     Run the continuous mode camera test
+                    Uses camera.ev
+hsi.bat             Run the Host System Interface test
+                    Uses hsi.ev
+timer.bat           Run the timer module test
+                    Uses timer.ev
+im_acq.bat          Run the image acquisition test
+                    Uses im_acq.ev
+
+fg.bat              Test the Frame Grabber coupled model
+                    Uses fg.ev
+
+The full IIS sim tests:
+
+iis_fast_cam.bat    Demonstrates the issue with a too fast
+                    transmission time.  Uses iis1.ev
+iis_slow_cam.bat    Demonstrates iis1.ev with a slow transmission
+                    time.  Uses iis1.ev
+iis_trig_cam.bat    Demonstrates the IIS with a triggered camera
+                    Uses iis2.ev
+iis_cont_cam.bat    Demonstrates the IIs with a continuous camera
+                    Uses iis3.ev

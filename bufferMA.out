@@ -1,0 +1,6 @@
+00:00:05:000 imageout 4803
+00:00:05:600 imageout -4803
+00:00:06:000 responseout -3
+00:00:07:000 responseout -4
+00:00:11:000 imageout 4802
+00:00:11:600 imageout -4802

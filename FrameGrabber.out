@@ -1,0 +1,12 @@
+00:00:02:000 responseout -1
+00:00:05:000 timerout 1
+00:00:05:050 timerout -1
+00:00:05:640 timerout 1
+00:00:05:690 timerout -1
+00:00:06:220 imageout 4802
+00:00:06:820 imageout -4802
+00:00:07:200 responseout -4
+00:00:07:700 imageout 4803
+00:00:08:300 imageout -4803
+00:00:08:400 imageout 4802
+00:00:09:000 imageout -4802
